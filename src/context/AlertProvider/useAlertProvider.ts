@@ -45,6 +45,8 @@ export function useAlertProviderState() {
         if (!cancelled && stored) {
           setAlerts(JSON.parse(stored) as PriceAlert[]);
         }
+      } catch {
+        // Dados ausentes ou inválidos não impedem o uso dos alertas em memória.
       } finally {
         if (!cancelled) setHydrated(true);
       }
