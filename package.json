@@ -9,12 +9,47 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "lint": "expo lint",
-    "test": "jest --watchAll"
+    "test": "jest --runInBand",
+    "test:coverage": "jest --runInBand --coverage --coverageReporters=text --coverageReporters=json-summary --coverageReporters=html"
   },
   "jest": {
     "preset": "jest-expo",
+    "testMatch": [
+      "<rootDir>/**/*.test.ts",
+      "<rootDir>/**/*.test.tsx"
+    ],
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1",
+      "^@components/(.*)$": "<rootDir>/src/components/$1",
+      "^@screens/(.*)$": "<rootDir>/src/screens/$1",
+      "^@context/(.*)$": "<rootDir>/src/context/$1",
+      "^@theme/(.*)$": "<rootDir>/src/theme/$1",
+      "^@data/(.*)$": "<rootDir>/src/data/$1",
+      "^@constants/(.*)$": "<rootDir>/src/constants/$1",
+      "^@utils/(.*)$": "<rootDir>/src/utils/$1"
+    },
+    "collectCoverageFrom": [
+      "src/utils/index.ts",
+      "src/context/AlertProvider/useAlertProvider.ts",
+      "src/components/ConditionOptionRow/ConditionOptionRow.tsx",
+      "src/components/ConditionOptionRow/useConditionOptionRow.ts",
+      "src/components/AlertCard/AlertCard.tsx",
+      "src/components/AlertCard/useAlertCard.ts",
+      "src/screens/CreateAlertScreen/useCreateAlertScreen.ts",
+      "src/screens/CreateAlertScreen/CreateAlertScreen.tsx",
+      "src/screens/PriceAlertsScreen/usePriceAlertsScreen.ts",
+      "src/screens/PriceAlertsScreen/PriceAlertsScreen.tsx"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 50,
+        "functions": 50,
+        "lines": 50,
+        "statements": 50
+      }
+    },
     "transformIgnorePatterns": [
-    "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@sentry/react-native|native-base|react-native-svg)"
+      "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@sentry/react-native|native-base|react-native-svg)"
     ]
   },
   "dependencies": {
@@ -46,6 +81,7 @@
     "react-native-worklets": "0.7.2"
   },
   "devDependencies": {
+    "@testing-library/react-native": "^14.1.0",
     "@types/jest": "29.5.14",
     "@types/react": "~19.2.2",
     "babel-plugin-module-resolver": "^5.0.2",
