@@ -1,56 +1,46 @@
-# Welcome to your Expo app 👋
+# CriptoAlert
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Aplicativo Expo para acompanhar criptomoedas, converter valores e criar alertas de preço.
 
-## Get started
-
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## Instalar dependências
 
 ```bash
-npm run reset-project
+npm install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Executar os testes
 
-### Other setup steps
+```bash
+npm test
+```
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+## Gerar cobertura
 
-## Learn more
+```bash
+npm run test:coverage
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+O relatório detalhado em HTML é gerado em `coverage/lcov-report/index.html`. O comando também apresenta o resumo no terminal e grava os dados brutos em `coverage/coverage-summary.json`.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Testes incluídos
 
-## Join the community
+- Formatadores de preço e variação, incluindo valores positivos, negativos, zero e diferentes precisões.
+- Componentes `ConditionOptionRow` e `AlertCard`: conteúdo, propriedades de acessibilidade e interações.
+- Hook do provedor de alertas: hidratação inicial, inclusão, remoção, persistência e falha ao ler o armazenamento.
+- Fluxo integrado de criação: seleção de moeda, preço e condição, salvamento e apresentação do alerta na lista.
+- Interações usam React Native Testing Library com consultas semânticas e `waitFor` para atualizações assíncronas.
 
-Join our community of developers creating universal apps.
+O armazenamento local e a navegação Expo são simulados nas fronteiras externas; telas, componentes, hooks e regras de negócio testados permanecem reais.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Relatório de cobertura
+
+Resumo calculado pelo Jest sobre os módulos principais cobertos pela suíte (alvo mínimo: 50% em cada métrica):
+
+| Métrica | Cobertura |
+| --- | ---: |
+| Instruções | 91.11% |
+| Ramificações | 81.13% |
+| Funções | 91.42% |
+| Linhas | 92.50% |
+
+O resumo JSON está em [`coverage/coverage-summary.json`](coverage/coverage-summary.json) e o relatório navegável está em [`coverage/lcov-report/index.html`](coverage/lcov-report/index.html).
