@@ -65,8 +65,16 @@ Seleciono inicialmente os cenários 1, 2, 3 e 4, por cobrirem as quatro áreas s
 - **Isolamento:** `launchApp` com `clearState: true` prepara cada cenário e
   apaga os alertas do aplicativo de teste. Execute somente no emulador de
   atividade; não se trata de exclusão de arquivos do repositório.
-- **Limitação honesta:** falhas de build, seletores ainda não conferidos ao vivo
-  e resultados Maestro são documentados em `evidencias/execucao.md`.
+- **Execução real posterior:** os quatro fluxos passaram no
+  emulador em 10/11/2026. A conversão teve uma falha no download do bundle antes
+  de abrir a tela e passou na reexecução isolada sem alteração do YAML. Capturas, relatórios
+  e o estado atualizado estão em `evidencias/execucao.md`; a resposta original
+  acima continua preservada, inclusive sua declaração de não execução.
+- **Ambiente versus funcionalidade:** a primeira tentativa falhou porque Metro
+  escutava somente IPv6. A opção `NODE_OPTIONS=--dns-result-order=ipv4first`
+  corrigiu o acesso IPv4 sem editar dependências, Android ou asserções. Uma
+  `ProtocolException` no transporte do bundle também não comprova erro no
+  cálculo de conversão; é necessário executar o fluxo até suas asserções.
 
 ## Relação com o artigo
 

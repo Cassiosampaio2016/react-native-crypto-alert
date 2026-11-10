@@ -1,90 +1,98 @@
-# Registro efetivo de execução
+# Execução real — Maestro e IA generativa
 
-Data: 10/11/2026, horário de Brasília. Este documento será atualizado conforme
-as verificações forem concluídas. YAML escrito não significa teste aprovado.
+Data: 10/11/2026, horário de Brasília (UTC−03:00).
+Projeto executado: `C:\Projetos\react-native-crypto-alert`.
 
-## Verificações já realizadas
+## Ambiente e correção do carregamento
 
-| Comando / verificação | Resultado observado |
-| --- | --- |
-| `npm install` | Concluído sem force e sem legacy-peer-deps |
-| `npx expo-doctor` | 20/20 verificações aprovadas após deduplicação |
-| `npx expo prebuild --platform android` | Concluído; MainApplication.kt gerado |
-| `npx tsc --noEmit` | Concluído também após a instrumentação E2E |
-| `npm test -- --watch=false --testTimeout=30000` | 5 suítes, 10 testes aprovados também após a instrumentação E2E; não é Maestro |
-| Bundle Metro Android | HTTP 200, 1.219 módulos compilados antes da instrumentação E2E |
-| ADB | emulator-5554 conectado, arquitetura x86_64 |
-| Identificador configurado | com.anonymous.cryptoalert em app.json e applicationId gerado; instalação ainda não confirmada |
-| Maestro CLI | Release oficial 2.12.1 baixada localmente; `maestro --version` confirmou 2.12.1 |
-| `maestro check-syntax <arquivo>` | Os quatro YAMLs retornaram OK individualmente; isso não é execução E2E |
+- JDK 17.0.21+9 já instalado; Maestro CLI 2.12.1.
+- Emulador `emulator-5554`, Android AVD `Medium_Phone_API_37.0`.
+- APK `com.anonymous.cryptoalert` confirmado por `adb shell pm path`.
+- Nenhuma recompilação Android ou instalação de dependências nesta execução.
+- Metro iniciado com `EXPO_PUBLIC_E2E=true` e cache limpo.
+- O Metro com `--localhost` escutava apenas em IPv6: `::1` retornava HTTP 200,
+  enquanto `127.0.0.1` retornava `ECONNREFUSED`. O app exibia `Unable to load script`.
+- Correção somente no ambiente do processo: `NODE_OPTIONS=--dns-result-order=ipv4first`
+  e reinício do Metro. Confirmados `packager-status:running` por IPv4,
+  bundle Android HTTP 200 e `adb reverse tcp:8081 tcp:8081`.
+- O fluxo 01 confirmou Bitcoin/BTC a USD 67,999.50. A fixture retorna os dados
+  localmente; imagens remotas podem ficar como placeholders por causa do DNS
+  do emulador. Os testes não validam disponibilidade da CoinGecko.
 
-## Bloqueio Android observado
+## Tentativa inicial preservada
 
-O build inicial falhou no caminho com acento. Um mapeamento SUBST permitiu
-avançar, mas não resolveu tudo: o autolinking normaliza dependências para o
-caminho físico C:, enquanto o codegen usa S:, gerando erro de raízes diferentes.
-Portanto, R:/S: com UTF-8 foi apenas solução parcial, não um build aprovado.
-Gradle 9.0 foi executado com JDK 17 portátil. NDK 27.1.12297006, plataforma 36
-e Build Tools 35 foram instalados automaticamente usando licenças já aceitas.
+Execução iniciada às 14h31, ainda com o bloqueio IPv4 do Metro. Os quatro fluxos
+falharam na espera inicial por `Cryptocurrencies`, sem chegar às verificações
+funcionais. Ver [JUnit inicial](resultados-tentativa-inicial.xml),
+[captura do fluxo 01](tentativa-inicial-01-lista.png).
+A captura foi produzida automaticamente pelo Maestro na falha. A imagem
+equivalente do fluxo 02 foi omitida por repetir a mesma tela de erro.
 
-Foi criada uma cópia física em `C:\Users\cassi\ca-e2e-20261110`, sem mover o
-workspace e sem copiar `.env`, `.git`, cobertura ou ferramentas portáteis.
-Comando usado: `npx expo run:android --no-bundler`, com JDK 17, UTF-8,
-`EXPO_PUBLIC_E2E=true` e Metro separado. Nessa cópia o codegen passou; o build
-avançou para compilação Java/Kotlin e instalação de CMake. Isso ainda não
-comprova conclusão do APK ou aprovação Maestro.
+## Reexecução após a correção
 
-O usuário GitHub autenticado foi confirmado como `Cassiosampaio2016`. O remote
-origin pertence a esse usuário e a API confirmou permissão de push. Nenhum
-push foi realizado; depende de aprovação explícita.
-
-## Estado dos cenários Maestro
-
-| Fluxo | Estado | Confirmação dos seletores no dispositivo |
-| --- | --- | --- |
-| 01-lista | Pendente de execução | Pendente; IDs conferidos no código |
-| 02-navegacao | Pendente de execução | Pendente; IDs conferidos no código |
-| 03-conversao | Pendente de execução | Pendente; IDs conferidos no código |
-| 04-criar-alerta | Pendente de execução | Pendente; IDs conferidos no código |
-
-Os quatro arquivos passaram em `maestro check-syntax`, com retorno `OK`
-individual para 01-lista, 02-navegacao, 03-conversao e 04-criar-alerta.
-Isso valida o formato dos comandos, mas não a resolução dos IDs na tela.
-
-Nenhuma captura de tela de aprovação foi fabricada. Os caminhos takeScreenshot
-dos YAMLs são destinos previstos, não evidências já existentes.
-
-## Situação às 12h42 (Brasília)
-
-O APK ainda não estava instalado (`adb shell pm path com.anonymous.cryptoalert`
-não retornou pacote). A tentativa mais recente usa tanto projeto quanto JDK em
-caminhos físicos ASCII; seu log parcial real está em `android-build-parcial.log`. O build ainda
-estava ativo, sem resultado final de aprovação. Houve falha anterior de
-Prefab/CMake ao chamar Java pelo caminho com acento, antes dessa nova tentativa.
-O JDK atual é `C:\Users\cassi\jdk-e2e-17\jdk-17.0.21+9`.
-
-Os documentos, YAMLs, seletores e fixture foram commitados. Capturas do app e
-aprovação dos fluxos continuam pendentes até a conclusão da instalação e da
-execução. A prioridade de publicação não altera esse registro de fatos.
-
-Uma cópia do log foi preservada às 12h50, antes da conclusão do APK. Ela é
-evidência de tentativa de compilação, não de aprovação. O stream ativo
-`android-build.log` fica ignorado pelo Git para não alterar continuamente o
-snapshot revisado. Não há relatório JUnit ou captura do app aprovado até esse
-registro. A conexão inicial `maestro hierarchy` também foi tentada, mas ainda
-não forneceu uma hierarquia para confirmar seletores do aplicativo.
-
-## Comandos planejados para execução real
-
-O Metro precisa iniciar com `EXPO_PUBLIC_E2E=true` para os valores controlados.
-Os fluxos usam `clearState: true`, apagando dados apenas do app no emulador de teste.
+Comando real, iniciado às 14h37:
 
 ```powershell
-adb devices
-adb -s emulator-5554 shell pm path com.anonymous.cryptoalert
-maestro --device emulator-5554 hierarchy
-maestro --device emulator-5554 test --format junit --output evidencias/resultados.xml .maestro/
+maestro --device emulator-5554 test --format junit --output evidencias/resultados.xml --test-output-dir evidencias/maestro .maestro/
 ```
 
-A confirmação ao vivo e os resultados deverão ser registrados aqui após a
-execução. Não usar resultados Jest como substitutos.
+| Fluxo | Resultado confirmado | Evidências |
+| --- | --- | --- |
+| 01-lista | PASSOU | [Lista com preço de fixture](01-lista.png), [comandos](01-lista-comandos.json) |
+| 02-navegacao | PASSOU | [Alertas vazios](02-alertas-vazios.png), [comandos](02-navegacao-comandos.json) |
+| 03-conversao | PASSOU na repetição isolada | [Zero inválido](03-entrada-invalida.png), [2 BTC em BRL](03-conversao-brl.png), [comandos](03-conversao-comandos.json) |
+| 04-criar-alerta | PASSOU | [Bitcoin below USD 70,000.00](04-alerta-criado.png), [comandos](04-criar-alerta-comandos.json) |
+
+O [JUnit da segunda tentativa](resultados.xml) registra três aprovações e uma
+falha na abertura do fluxo 03. O log do dispositivo identificou
+`java.net.ProtocolException: Expected leading [0-9a-fA-F] character but was 0xd`
+no download HTTP do bundle, antes da execução do cálculo. O
+[trecho real de transporte](segunda-tentativa-03-transporte.log) foi preservado.
+
+O mesmo YAML de conversão foi repetido sem alteração, às 14h45:
+
+```powershell
+maestro --device emulator-5554 test --format junit --output evidencias/resultados-conversao.xml --test-output-dir evidencias/maestro .maestro/03-conversao.yaml
+```
+
+O [JUnit da conversão](resultados-conversao.xml) confirma aprovação em 162,845 s:
+zero inválido, 2 BTC = USD 135,999.00 e BRL 696,314.88. A suíte de quatro fluxos
+teve 3/4 aprovações; a repetição isolada teve 1/1. Assim, os **quatro fluxos têm
+aprovação comprovada**, sem alegar uma única execução completa 4/4.
+O [resumo derivado](resumo-resultados.json) aponta o XML original de cada
+resultado mais recente. Foram nove execuções de fluxos no total: quatro
+aprovações e cinco falhas anteriores de ambiente/transporte. Não há fluxo
+obrigatório sem aprovação, mas a falha intermitente de transporte pode reaparecer.
+
+As capturas publicadas são cópias sem edição dos arquivos `takeScreenshot`
+produzidos pelo Maestro em `evidencias/maestro/2026-11-10_143758/` e
+`evidencias/maestro/2026-11-10_144505/`.
+Foram revisadas visualmente: cinco telas distintas de sucesso/validação e uma
+tela de falha inicial. A volta à lista do fluxo 02 foi omitida por repetir o
+conteúdo da imagem do fluxo 01; o retorno continua comprovado no JSON de comandos.
+Os JSONs de comandos são os artefatos originais de execução do Maestro.
+Diagnósticos brutos ficam ignorados pelo Git para evitar logs extensos e
+informações irrelevantes à entrega. Logs de build não são evidência E2E.
+
+## Requisitos revisados
+
+- `reflexao.md`: cinco respostas com referências e declaração da assistência de IA.
+- `ia/planejamento.md`: prompt literal, resposta original preservada, oito cenários,
+  seleção de quatro e análise crítica das adaptações.
+- `.maestro/`: quatro fluxos com preparação independente, asserções e capturas.
+- `README.md`: instalação, JDK/emulador, modo E2E, execução e correção IPv4.
+- Evidências reais dos quatro fluxos aprovados produzidas e inspecionadas.
+- Histórico incremental preservado, incluindo reflexão, planejamento,
+  instrumentação E2E e preparação Android em commits separados.
+- Documentação e artefatos revisados; sem mudanças em código, dependências,
+  configuração Android ou YAMLs. `src.zip` removido por autorização do usuário.
+
+Nenhum requisito obrigatório listado na solicitação ficou sem comprovação local.
+Os commits de entrega e a confirmação do push são informados no relatório final.
+
+## Limites
+
+A execução usa fixture explícita e valida interface, navegação, cálculo e cadastro
+local. Não comprova API real, carregamento das imagens remotas, notificações,
+exclusão ou persistência após reinício. O app não implementa notificações.
+Os testes Jest e o log histórico `android-build-parcial.log` não substituem Maestro.

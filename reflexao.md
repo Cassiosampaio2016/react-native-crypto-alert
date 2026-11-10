@@ -4,9 +4,9 @@
 **Atividade:** testes E2E com Maestro e IA generativa  
 **Data:** 10/11/2026
 
-> Rascunho elaborado com assistência de IA. Leia, revise e adapte com suas
-> próprias palavras antes da entrega. Não representa uma declaração de autoria
-> exclusivamente humana nem uma execução do experimento dos pesquisadores.
+> Texto elaborado com assistência de IA, com referências e relação explícita
+> com o aplicativo. Não representa autoria exclusivamente humana nem uma
+> reprodução do experimento dos pesquisadores.
 
 ## 1. Qual problema a abordagem GenIA-E2ETest procura resolver?
 
@@ -55,11 +55,14 @@ fluxos que não puderam ser executados.
 
 ## 5. Como o Maestro pode ser usado para validar, na prática, um fluxo sugerido por uma IA?
 
-Minha proposta prática é traduzir o cenário revisado em um YAML que abra o APK,
-toque nas abas, preencha os campos e confira os resultados visíveis. Para criar
+Nesta atividade, o cenário revisado foi traduzido em um YAML que abre o APK,
+toca nas abas, preenche os campos e confere os resultados visíveis. Para criar
 um alerta, por exemplo: abrir `Alerts`, tocar `New Alert`, selecionar Bitcoin,
 informar o preço, escolher a condição, salvar e conferir o card.
 
+O fluxo de criação foi executado e aprovado no emulador, com captura do card
+Bitcoin abaixo de USD 70,000.00. Os demais fluxos também têm aprovação real,
+com repetição isolada da conversão após falha de transporte do bundle.
 O Maestro permite expressar essas interações e asserções pela interface real.
 Uma execução deve produzir resultado e evidências identificáveis; somente
 escrever YAML ou passar testes Jest não comprova esse fluxo. O estado efetivo

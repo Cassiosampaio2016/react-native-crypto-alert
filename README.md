@@ -14,8 +14,30 @@ Entrega individual: [Cassiosampaio2016/react-native-crypto-alert](https://github
 - [Quatro fluxos Maestro](.maestro/).
 - [Resultados efetivos, bloqueios e evidências](evidencias/execucao.md).
 
-O texto de reflexão é um rascunho assistido por IA para leitura, revisão e
-adaptação pessoal. Os resultados do artigo não são resultados deste aplicativo.
+A reflexão e o planejamento identificam a assistência de IA. Os resultados
+do artigo não são resultados deste aplicativo.
+
+**Resultado em 10/11/2026:** os quatro fluxos têm execução real aprovada no
+`emulator-5554`. A segunda rodada completa passou em 3/4; a conversão passou
+na repetição isolada, sem alterações no YAML. As tentativas com falhas de
+ambiente e transporte estão preservadas. Consulte o
+[registro de execução](evidencias/execucao.md), o
+[JUnit da rodada completa](evidencias/resultados.xml), o
+[JUnit da conversão](evidencias/resultados-conversao.xml) e o
+[resumo por fluxo](evidencias/resumo-resultados.json).
+
+### Capturas reais selecionadas
+
+| Fluxo | Evidência |
+| --- | --- |
+| 01 — Lista | [Bitcoin a USD 67,999.50](evidencias/01-lista.png) |
+| 02 — Navegação | [Aba Alerts sem alertas](evidencias/02-alertas-vazios.png) |
+| 03 — Conversão | [Zero inválido](evidencias/03-entrada-invalida.png) e [2 BTC em BRL](evidencias/03-conversao-brl.png) |
+| 04 — Criar alerta | [Card Bitcoin abaixo de USD 70,000.00](evidencias/04-alerta-criado.png) |
+
+As imagens foram inspecionadas e selecionadas por conteúdo; telas repetidas
+com nomes diferentes não foram incluídas. Os JSONs em `evidencias/` preservam
+os comandos executados pelo Maestro, inclusive os passos sem captura publicada.
 
 ### Cenários implementados
 
@@ -69,7 +91,8 @@ de `launchApp` do Maestro:
 
 ```powershell
 $env:EXPO_PUBLIC_E2E = 'true'
-npx expo start --localhost --port 8081
+$env:NODE_OPTIONS = '--dns-result-order=ipv4first'
+npx expo start --localhost --port 8081 --clear
 ```
 
 Em outro terminal, a partir da raiz do projeto:
@@ -81,19 +104,27 @@ adb -s emulator-5554 shell pm path com.anonymous.cryptoalert
 maestro --device emulator-5554 hierarchy
 maestro --device emulator-5554 test .maestro/01-lista.yaml
 maestro --device emulator-5554 test .maestro/02-navegacao.yaml
-maestro --device emulator-5554 test --format junit --output evidencias/resultados.xml .maestro/
+maestro --device emulator-5554 test --format junit --output evidencias/resultados.xml --test-output-dir evidencias/maestro .maestro/
 ```
+
+Nesta máquina, `localhost` sem a opção `ipv4first` fez o Metro escutar somente
+em `::1`, enquanto o encaminhamento ADB precisava de IPv4. Confira o servidor
+com `curl.exe --noproxy "*" http://127.0.0.1:8081/status`: o resultado esperado
+é `packager-status:running`. Aguarde a geração inicial do bundle após limpar
+o cache antes de executar os fluxos. O APK de desenvolvimento depende do Metro
+ativo durante toda a suíte. A variável E2E precisa estar no processo Metro;
+defini-la apenas no terminal do Maestro não altera o bundle.
 
 `hierarchy` permite conferir IDs e textos expostos no dispositivo. Os YAMLs
 contêm `takeScreenshot` para salvar capturas em `evidencias/`. A existência dos
 comandos não comprova execução: consulte o [registro efetivo](evidencias/execucao.md)
-para saber quais fluxos foram executados e quais continuam pendentes.
+para conferir o resultado de cada fluxo e das tentativas anteriores.
 
 O arquivo `evidencias/android-build-parcial.log` é um log real de compilação
 capturado às 12h50 de 10/11/2026, ainda sem APK concluído. Ele comprova a
 tentativa e o progresso do ambiente; não substitui capturas do aplicativo,
-relatório Maestro ou aprovação de cenários. Esses itens seguem pendentes no
-registro de execução até que sejam efetivamente produzidos.
+relatório Maestro ou aprovação de cenários. As execuções E2E posteriores estão
+documentadas separadamente no registro de execução, com capturas reais.
 
 ### Problemas conhecidos e limites
 
@@ -150,7 +181,11 @@ Resumo calculado pelo Jest sobre os módulos principais cobertos pela suíte (al
 | Funções | 91.42% |
 | Linhas | 92.50% |
 
-O resumo JSON está em [`coverage/coverage-summary.json`](coverage/coverage-summary.json) e o relatório navegável está em [`coverage/lcov-report/index.html`](coverage/lcov-report/index.html).
+O resumo JSON está em [`coverage/coverage-summary.json`](coverage/coverage-summary.json).
+O [relatório HTML já versionado](coverage/index.html) corresponde à execução
+anterior. Uma nova execução de `npm run test:coverage` gera o HTML em
+`coverage/lcov-report/index.html`. Os números acima são do registro de cobertura
+existente; Jest não foi reexecutado nesta rodada de E2E.
 
 ## Android no Windows (Expo SDK 55)
 
@@ -159,7 +194,10 @@ com um emulador conectado. O template deste SDK usa Gradle 9.0: Java 8 é antigo
 demais e Java 25 requer Gradle 9.1 ou superior. Não é necessário alterar o Java
 global nem atualizar o Gradle fora do template do Expo.
 
-**Para este workspace com acento, use projeto e JDK em caminhos físicos ASCII.**
+**Use projeto e JDK em caminhos físicos ASCII.** O workspace atual,
+`C:\Projetos\react-native-crypto-alert`, já atende a esse requisito. As notas
+abaixo sobre cópia e SUBST registram o ambiente anterior em caminho acentuado;
+não é necessário copiar novamente nem recompilar o APK já instalado para E2E.
 O JDK desta sessão foi extraído em `C:\Users\cassi\jdk-e2e-17\jdk-17.0.21+9`,
 detectado pelo script de ambiente. O Prefab/CMake também pode falhar quando o
 próprio Java está em caminho acentuado. O helper
@@ -180,7 +218,7 @@ Ela foi criada a partir do workspace sem mover arquivos ou copiar `.env`.
 Não edite a cópia como fonte principal: faça alterações no workspace e prepare
 uma nova cópia quando precisar recompilar mudanças nativas.
 
-Para projetos que já estejam em caminho físico ASCII, no PowerShell:
+Para uma instalação nova em caminho físico ASCII, no PowerShell:
 
 ```powershell
 . .\scripts\android-env.ps1
