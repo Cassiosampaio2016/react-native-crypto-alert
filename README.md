@@ -153,7 +153,28 @@ com um emulador conectado. O template deste SDK usa Gradle 9.0: Java 8 é antigo
 demais e Java 25 requer Gradle 9.1 ou superior. Não é necessário alterar o Java
 global nem atualizar o Gradle fora do template do Expo.
 
-No PowerShell, a partir da raiz do projeto:
+**Para este workspace com acento, use projeto e JDK em caminhos físicos ASCII.**
+O JDK desta sessão foi extraído em `C:\Users\cassi\jdk-e2e-17\jdk-17.0.21+9`,
+detectado pelo script de ambiente. O Prefab/CMake também pode falhar quando o
+próprio Java está em caminho acentuado. O helper
+abaixo cria uma pasta nova, exclui da cópia `.env*`, `.git`, caches, ferramentas
+e pastas nativas, sem apagar ou mover nada do original. Ele interrompe se o
+destino já existir. Use dot-source para manter o ambiente e o diretório:
+
+```powershell
+. .\scripts\prepare-android-build.ps1 -Destination "$env:USERPROFILE\crypto-alert-android"
+npm ci
+$env:EXPO_PUBLIC_E2E = 'true'
+npx expo prebuild --platform android
+npx expo run:android
+```
+
+A cópia usada na execução desta sessão é `C:\Users\cassi\ca-e2e-20261110`.
+Ela foi criada a partir do workspace sem mover arquivos ou copiar `.env`.
+Não edite a cópia como fonte principal: faça alterações no workspace e prepare
+uma nova cópia quando precisar recompilar mudanças nativas.
+
+Para projetos que já estejam em caminho físico ASCII, no PowerShell:
 
 ```powershell
 . .\scripts\android-env.ps1
@@ -164,8 +185,8 @@ npx expo run:android
 ```
 
 O ponto seguido de espaço no primeiro comando carrega as variáveis no terminal
-atual. O script usa o JDK 17 portátil em `.android-tools/`, quando disponível,
-ou `JAVA_HOME`. Para instalações próprias, informe os caminhos:
+atual. O script prioriza JDK 17 em `$env:USERPROFILE\jdk-e2e-17`, depois o portátil
+em `.android-tools/` e então `JAVA_HOME`. Para instalações próprias, informe os caminhos:
 
 ```powershell
 . .\scripts\android-env.ps1 -JdkHome 'C:\caminho\jdk-17' -SdkHome "$env:LOCALAPPDATA\Android\Sdk"

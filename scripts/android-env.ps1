@@ -28,9 +28,12 @@ if ($projectRoot -match '[^\x00-\x7F]') {
 }
 
 if (-not $JdkHome) {
+    $asciiJdkRoot = Join-Path $env:USERPROFILE 'jdk-e2e-17'
+    $asciiJdk = Get-ChildItem -LiteralPath $asciiJdkRoot -Directory -Filter 'jdk-17*' -ErrorAction SilentlyContinue |
+        Select-Object -First 1
     $portableJdk = Get-ChildItem -LiteralPath $toolsRoot -Directory -Filter 'jdk-17*' -ErrorAction SilentlyContinue |
         Select-Object -First 1
-    $JdkHome = if ($portableJdk) { $portableJdk.FullName } else { $env:JAVA_HOME }
+    $JdkHome = if ($asciiJdk) { $asciiJdk.FullName } elseif ($portableJdk) { $portableJdk.FullName } else { $env:JAVA_HOME }
 }
 if (-not $JdkHome -or -not (Test-Path -LiteralPath (Join-Path $JdkHome 'bin\javac.exe'))) {
     throw 'JDK 17 not found. Pass -JdkHome with the path to a JDK 17 installation.'
