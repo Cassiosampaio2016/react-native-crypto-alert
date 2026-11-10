@@ -1,0 +1,23 @@
+appId: com.anonymous.cryptoalert
+name: Navegacao independente entre as tres abas
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: "Cryptocurrencies"
+    timeout: 60000
+- tapOn:
+    id: "tab-convert"
+- assertVisible: "Convert Crypto"
+- assertVisible: "Enter an amount"
+- tapOn:
+    id: "tab-alerts"
+- assertVisible: "Price Alerts"
+- assertVisible: "No alerts yet"
+- takeScreenshot: evidencias/02-alertas-vazios
+- tapOn:
+    id: "tab-list"
+- assertVisible: "Cryptocurrencies"
+- assertVisible:
+    id: "crypto-name-bitcoin"
+- takeScreenshot: evidencias/02-navegacao

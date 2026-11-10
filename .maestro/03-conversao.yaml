@@ -1,0 +1,33 @@
+appId: com.anonymous.cryptoalert
+name: Conversao automatica e quantidade invalida
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: "Cryptocurrencies"
+    timeout: 60000
+- tapOn:
+    id: "tab-convert"
+- assertVisible: "Enter an amount"
+- tapOn:
+    id: "conversion-amount"
+- inputText: "0"
+- hideKeyboard
+- assertVisible: "Invalid amount"
+- takeScreenshot: evidencias/03-entrada-invalida
+- tapOn:
+    id: "conversion-amount"
+- eraseText
+- inputText: "2"
+- hideKeyboard
+- assertVisible:
+    id: "conversion-result"
+    text: '\$135,999\.00'
+- tapOn:
+    id: "select-fiat-currency"
+- tapOn:
+    id: "option-BRL"
+- assertVisible:
+    id: "conversion-result"
+    text: 'R\$696,314\.88'
+- takeScreenshot: evidencias/03-conversao-brl

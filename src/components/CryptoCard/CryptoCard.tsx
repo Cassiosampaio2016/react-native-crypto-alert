@@ -23,7 +23,7 @@ export function CryptoCard({ crypto }: CryptoCardProps) {
             </Text>}
           </View>
           <View>
-            <Text style={cryptoCardStyles.name}>{crypto.name}</Text>
+            <Text testID={`crypto-name-${crypto.id}`} style={cryptoCardStyles.name}>{crypto.name}</Text>
             <Text style={cryptoCardStyles.symbol}>{crypto.symbol}</Text>
             {hasAlert && (
               <Pressable

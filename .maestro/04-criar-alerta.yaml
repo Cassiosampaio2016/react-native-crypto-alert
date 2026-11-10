@@ -1,0 +1,36 @@
+appId: com.anonymous.cryptoalert
+name: Criar alerta Bitcoin abaixo do preco alvo
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: "Cryptocurrencies"
+    timeout: 60000
+- tapOn:
+    id: "tab-alerts"
+- assertVisible: "No alerts yet"
+- tapOn: "New Alert"
+- assertVisible: "Create Alert"
+- tapOn:
+    id: "select-cryptocurrency"
+- tapOn:
+    id: "option-bitcoin"
+- tapOn:
+    id: "alert-target-price"
+- inputText: "70000"
+- hideKeyboard
+- tapOn: "Below target price"
+- scrollUntilVisible:
+    element:
+      text: "Save Alert"
+    direction: DOWN
+- assertVisible:
+    text: "Save Alert"
+    enabled: true
+- tapOn: "Save Alert"
+- assertVisible: "Price Alerts"
+- assertVisible: "Bitcoin"
+- assertVisible: "Alert when price goes below"
+- assertVisible: '\$70,000\.00'
+- assertNotVisible: "No alerts yet"
+- takeScreenshot: evidencias/04-alerta-criado

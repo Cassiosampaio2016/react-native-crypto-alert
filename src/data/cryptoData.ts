@@ -98,6 +98,11 @@ function getCoinGeckoHeaders() {
 }
 
 export async function fetchCryptocurrenciesFromApi(): Promise<Cryptocurrency[]> {
+  // Explicit fixture mode for reproducible E2E runs; normal builds still use the API.
+  if (process.env.EXPO_PUBLIC_E2E === "true") {
+    return cryptocurrencies;
+  }
+
   const searchParams = new URLSearchParams({
     vs_currency: "usd",
     order: "market_cap_desc",

@@ -1,0 +1,13 @@
+appId: com.anonymous.cryptoalert
+name: Abertura e lista com dados E2E controlados
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: "Cryptocurrencies"
+    timeout: 60000
+- assertVisible:
+    id: "crypto-name-bitcoin"
+- assertVisible: "BTC"
+- assertVisible: '\$67,999\.50'
+- takeScreenshot: evidencias/01-lista

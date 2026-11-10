@@ -34,6 +34,7 @@ export function SelectField({
     <View>
       <Text style={selectFieldStyles.label}>{label}</Text>
       <Pressable
+        testID={`select-${label.toLowerCase().replace(/\s+/g, "-")}`}
         onPress={open}
         style={selectFieldStyles.field}
         accessibilityRole="button"
@@ -72,6 +73,7 @@ export function SelectField({
             keyExtractor={(item) => item.value}
             renderItem={({ item }) => (
               <Pressable
+                testID={`option-${item.value}`}
                 onPress={() => selectItem(item.value)}
                 style={[
                   selectFieldStyles.optionRow,

@@ -32,6 +32,8 @@ export function ConversionScreen() {
       <View style={conversionScreenStyles.fieldBlock}>
         <Text style={conversionScreenStyles.amountLabel}>Amount</Text>
         <TextInput
+          testID="conversion-amount"
+          accessibilityLabel="Amount"
           style={conversionScreenStyles.amountInput}
           placeholder="0.00"
           placeholderTextColor={colors.textMuted}
@@ -70,7 +72,7 @@ export function ConversionScreen() {
         ) : showInvalid ? (
           <Text style={conversionScreenStyles.resultInvalid}>Invalid amount</Text>
         ) : (
-          <Text style={conversionScreenStyles.resultValue}>
+          <Text testID="conversion-result" style={conversionScreenStyles.resultValue}>
             {formattedResult ?? ""}
           </Text>
         )}
