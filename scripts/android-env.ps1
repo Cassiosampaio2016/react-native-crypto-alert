@@ -59,6 +59,10 @@ $env:JAVA_HOME = $JdkHome
 $env:ANDROID_HOME = $SdkHome
 $env:PATH = "$JdkHome\bin;$SdkHome\platform-tools;$env:PATH"
 if ($NodeHome) { $env:PATH = "$NodeHome;$env:PATH" }
+$maestroBin = Join-Path $toolsRoot 'maestro-cli\maestro\bin'
+if (Test-Path -LiteralPath (Join-Path $maestroBin 'maestro.bat')) {
+    $env:PATH = "$maestroBin;$env:PATH"
+}
 # Gradle's Node subprocesses emit UTF-8 paths, including accented directory names.
 if ($env:JAVA_TOOL_OPTIONS -notmatch '(?:^|\s)-Dfile.encoding=') {
     $env:JAVA_TOOL_OPTIONS = "$env:JAVA_TOOL_OPTIONS -Dfile.encoding=UTF-8".Trim()
