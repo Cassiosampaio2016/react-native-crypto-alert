@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites>
+  <testsuite name="Test Suite" device="Medium_Phone_API_37.0" tests="4" failures="4" time="336.965" timestamp="2026-11-10T14:31:44">
+    <testcase id="Abertura e lista com dados E2E controlados" name="Abertura e lista com dados E2E controlados" classname="Abertura e lista com dados E2E controlados" file=".maestro\01-lista.yaml" time="92.782" timestamp="2026-11-10T14:31:45" status="ERROR">
+      <failure>Assertion is false: "Cryptocurrencies" is visible</failure>
+    </testcase>
+    <testcase id="Navegacao independente entre as tres abas" name="Navegacao independente entre as tres abas" classname="Navegacao independente entre as tres abas" file=".maestro\02-navegacao.yaml" time="81.621" timestamp="2026-11-10T14:33:17" status="ERROR">
+      <failure>Assertion is false: "Cryptocurrencies" is visible</failure>
+    </testcase>
+    <testcase id="Conversao automatica e quantidade invalida" name="Conversao automatica e quantidade invalida" classname="Conversao automatica e quantidade invalida" file=".maestro\03-conversao.yaml" time="80.602" timestamp="2026-11-10T14:34:39" status="ERROR">
+      <failure>Assertion is false: "Cryptocurrencies" is visible</failure>
+    </testcase>
+    <testcase id="Criar alerta Bitcoin abaixo do preco alvo" name="Criar alerta Bitcoin abaixo do preco alvo" classname="Criar alerta Bitcoin abaixo do preco alvo" file=".maestro\04-criar-alerta.yaml" time="81.731" timestamp="2026-11-10T14:36:00" status="ERROR">
+      <failure>Assertion is false: "Cryptocurrencies" is visible</failure>
+    </testcase>
+  </testsuite>
+</testsuites>

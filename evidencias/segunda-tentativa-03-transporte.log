@@ -1,0 +1,14 @@
+11-10 17:42:15.025 I/okhttp.OkHttpClient(15598): Callback failure for call to http://10.0.2.2:8081/...
+11-10 17:42:15.028 I/okhttp.OkHttpClient(15598): java.net.ProtocolException: Expected leading [0-9a-fA-F] character but was 0xd
+11-10 17:42:15.028 I/okhttp.OkHttpClient(15598): 	at okhttp3.internal.http1.Http1ExchangeCodec$ChunkedSource.readChunkSize(Http1ExchangeCodec.kt:436)
+11-10 17:42:15.028 I/okhttp.OkHttpClient(15598): 	at okhttp3.internal.http1.Http1ExchangeCodec$ChunkedSource.read(Http1ExchangeCodec.kt:408)
+11-10 17:42:15.029 I/okhttp.OkHttpClient(15598): 	at okhttp3.internal.connection.Exchange$ResponseBodySource.read(Exchange.kt:276)
+11-10 17:42:15.029 I/okhttp.OkHttpClient(15598): 	at okio.RealBufferedSource.read(RealBufferedSource.kt:189)
+11-10 17:42:15.029 I/okhttp.OkHttpClient(15598): 	at com.facebook.react.devsupport.MultipartStreamReader.readAllParts(MultipartStreamReader.kt:83)
+11-10 17:42:15.029 I/okhttp.OkHttpClient(15598): 	at com.facebook.react.devsupport.BundleDownloader.processMultipartResponse(BundleDownloader.kt:187)
+11-10 17:42:15.029 I/okhttp.OkHttpClient(15598): 	at com.facebook.react.devsupport.BundleDownloader.access$processMultipartResponse(BundleDownloader.kt:35)
+11-10 17:42:15.029 I/okhttp.OkHttpClient(15598): 	at com.facebook.react.devsupport.BundleDownloader$downloadBundleFromURL$1.onResponse(BundleDownloader.kt:133)
+11-10 17:42:15.029 I/okhttp.OkHttpClient(15598): 	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:519)
+11-10 17:42:15.029 I/okhttp.OkHttpClient(15598): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1100)
+11-10 17:42:15.029 I/okhttp.OkHttpClient(15598): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+11-10 17:42:15.029 I/okhttp.OkHttpClient(15598): 	at java.lang.Thread.run(Thread.java:1572)

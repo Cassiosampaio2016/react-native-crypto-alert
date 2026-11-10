@@ -48,3 +48,6 @@ app-example
 
 # Active build stream; a reviewed evidence snapshot is committed separately.
 /evidencias/android-build.log
+
+# Raw Maestro diagnostics; reviewed screenshots and reports live in evidencias/.
+/evidencias/maestro/

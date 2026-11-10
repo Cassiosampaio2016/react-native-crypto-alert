@@ -1,0 +1,35 @@
+{
+  "description": "Resumo derivado do ultimo resultado real de cada fluxo; os XMLs originais preservam as falhas anteriores.",
+  "passed": 4,
+  "failed": 0,
+  "results": [
+    {
+      "flow": ".maestro\\03-conversao.yaml",
+      "name": "Conversao automatica e quantidade invalida",
+      "status": "SUCCESS",
+      "timestamp": "2026-11-10T14:45:31",
+      "source": "resultados-conversao.xml"
+    },
+    {
+      "flow": ".maestro\\02-navegacao.yaml",
+      "name": "Navegacao independente entre as tres abas",
+      "status": "SUCCESS",
+      "timestamp": "2026-11-10T14:39:46",
+      "source": "resultados.xml"
+    },
+    {
+      "flow": ".maestro\\01-lista.yaml",
+      "name": "Abertura e lista com dados E2E controlados",
+      "status": "SUCCESS",
+      "timestamp": "2026-11-10T14:38:23",
+      "source": "resultados.xml"
+    },
+    {
+      "flow": ".maestro\\04-criar-alerta.yaml",
+      "name": "Criar alerta Bitcoin abaixo do preco alvo",
+      "status": "SUCCESS",
+      "timestamp": "2026-11-10T14:42:51",
+      "source": "resultados.xml"
+    }
+  ]
+}
