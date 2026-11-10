@@ -58,7 +58,7 @@ dos YAMLs são destinos previstos, não evidências já existentes.
 
 O APK ainda não estava instalado (`adb shell pm path com.anonymous.cryptoalert`
 não retornou pacote). A tentativa mais recente usa tanto projeto quanto JDK em
-caminhos físicos ASCII; seu log real está em `android-build.log`. O build ainda
+caminhos físicos ASCII; seu log parcial real está em `android-build-parcial.log`. O build ainda
 estava ativo, sem resultado final de aprovação. Houve falha anterior de
 Prefab/CMake ao chamar Java pelo caminho com acento, antes dessa nova tentativa.
 O JDK atual é `C:\Users\cassi\jdk-e2e-17\jdk-17.0.21+9`.
@@ -66,6 +66,13 @@ O JDK atual é `C:\Users\cassi\jdk-e2e-17\jdk-17.0.21+9`.
 Os documentos, YAMLs, seletores e fixture foram commitados. Capturas do app e
 aprovação dos fluxos continuam pendentes até a conclusão da instalação e da
 execução. A prioridade de publicação não altera esse registro de fatos.
+
+Uma cópia do log foi preservada às 12h50, antes da conclusão do APK. Ela é
+evidência de tentativa de compilação, não de aprovação. O stream ativo
+`android-build.log` fica ignorado pelo Git para não alterar continuamente o
+snapshot revisado. Não há relatório JUnit ou captura do app aprovado até esse
+registro. A conexão inicial `maestro hierarchy` também foi tentada, mas ainda
+não forneceu uma hierarquia para confirmar seletores do aplicativo.
 
 ## Comandos planejados para execução real
 

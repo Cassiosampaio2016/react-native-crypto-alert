@@ -45,3 +45,6 @@ app-example
 
 # Local Android toolchain downloads
 /.android-tools/
+
+# Active build stream; a reviewed evidence snapshot is committed separately.
+/evidencias/android-build.log

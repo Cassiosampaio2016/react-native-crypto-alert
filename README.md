@@ -89,6 +89,12 @@ contêm `takeScreenshot` para salvar capturas em `evidencias/`. A existência do
 comandos não comprova execução: consulte o [registro efetivo](evidencias/execucao.md)
 para saber quais fluxos foram executados e quais continuam pendentes.
 
+O arquivo `evidencias/android-build-parcial.log` é um log real de compilação
+capturado às 12h50 de 10/11/2026, ainda sem APK concluído. Ele comprova a
+tentativa e o progresso do ambiente; não substitui capturas do aplicativo,
+relatório Maestro ou aprovação de cenários. Esses itens seguem pendentes no
+registro de execução até que sejam efetivamente produzidos.
+
 ### Problemas conhecidos e limites
 
 - Caminhos com acento no Windows afetaram a cópia do template e a compilação.
